@@ -10,8 +10,8 @@ class Polygon2{
   
   Vector<Point> points;
   
-  float minRad = 5;
-  float maxRad = 12;
+  float minRad = 100;
+  float maxRad = 1;
   
   int col=0;
   
@@ -59,9 +59,22 @@ class Polygon2{
     // Den letzten basePoint brauchen wir doppelt, damit wir richtig zeichnen können
     this.points.add(this.basePoints.get(0));
     
-    // Hier beginnt die Berechnung
-    //TODO: Richtiges Abbruchkriterium finden!!!
+    // berechnen max und min abstand
+    for(int i=0;i<points.size()-1; i++){
+       Point n1 = points.get(i);
+       Point n2 = points.get(i+1);
+       
+       float dist = (float)Math.sqrt(((n2.x - n1.x)*(n2.x - n1.x))+((n2.y - n1.y)*(n2.y - n1.y)));
+       dist /= 12;
+       if(dist < minRad){
+          minRad = dist;
+       }
+       if(dist > maxRad){
+         maxRad = dist;
+       }
+    }
     
+    // Hier beginnt die Berechnung
     int currentPointIdx = 0;
     for(int i=0;i<1000;i++){
       Point neu = new Point();
