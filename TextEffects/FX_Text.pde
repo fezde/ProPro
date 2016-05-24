@@ -1,7 +1,47 @@
+/************************************************************************************************************************************
+ * Draws a text with a simple, blurred shadow
+ ************************************************************************************************************************************/
+PGraphics txtFxShadow(String text, PFont textFont, color colorText, color colorShadow){
+  PGraphics result;
+  
+  PVector textPosition = new PVector(40, 200);
+  float rad = 0; 
+  
+  float textSize = textFont.getSize();
 
-/**
+  result = createGraphics(10, 10);
+  result.beginDraw();
+  result.textFont(textFont);
+  result.textAlign(CENTER);
+  result.textSize(textSize);
+
+  int resultWidth = round(result.textWidth(text))+20;
+  int resultHeight = round((result.textAscent() + result.textDescent()) ) +1;
+  textPosition = new PVector((float)resultWidth/2,  result.textAscent()-5 );
+  
+  result =createGraphics(resultWidth, resultHeight);
+  result.beginDraw();
+  //result.background(125);
+  result.textFont(textFont);
+  result.textAlign(CENTER);
+  result.textSize(textSize);
+  
+  result.fill(colorShadow);
+  result.text(text, textPosition.x + 5, textPosition.y + 5);
+  result.filter(BLUR,3);
+  
+  result.fill(colorText);
+  result.text(text, textPosition.x , textPosition.y );
+  
+  result.endDraw();
+
+  return result;
+}
+  
+
+/************************************************************************************************************************************
  * Draws a text with a backdrop and black outlines around the text and the backdrop
- **/
+ ************************************************************************************************************************************/
 PGraphics txtFxBackdropText(String text, PFont textFont, 
   color textColor, 
   color backdropColor, float backdropDistance) {
@@ -9,9 +49,9 @@ PGraphics txtFxBackdropText(String text, PFont textFont,
   return txtFxBackdropText(text, textFont, textColor, color(0, 0, 0), 2, backdropColor, backdropDistance, color(0, 0, 0), 2);
 }
 
-/**
+/************************************************************************************************************************************
  * Draws a text with a backdrop and outlines around the text and the backdrop
- **/
+************************************************************************************************************************************/
 PGraphics txtFxBackdropText(String text, PFont textFont, 
   color textFill, 
   color textOutlineFill, float textOutlineWidth, 
