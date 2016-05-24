@@ -36,7 +36,7 @@ PGraphics txtFxBackdropText(String text, PFont textFont,
 
   result =createGraphics(resultWidth, resultHeight);
   result.beginDraw();
-  result.background(125);
+  //result.background(125);
   result.textFont(textFont);
   result.textAlign(CENTER);
   result.textSize(textSize);
