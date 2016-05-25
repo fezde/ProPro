@@ -47,8 +47,10 @@ text("Text Position + width", 30, 280);
 textAlign(RIGHT);
 fill(125);
 stroke(125);
-rect(300,height-40, 600,100);
+rect(300,height-50, 600,100);
 fill(0);
-text("© http://fez.world",width-10, height-10);
+text("© http://fez.world",width-10, height-30);
+textSize(10);
+text("Download @ https://github.com/fezde/ProPro/tree/master/KnowYouFontMetrics",width-10, height-10);
 
-save("FontMetricsCheatSheet.png");
+save("ProcessingFontMetricsCheatSheet.png");
