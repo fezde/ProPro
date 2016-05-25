@@ -119,3 +119,54 @@ PGraphics txtFxBackdropText(String text, PFont textFont,
 
   return result;
 }
+
+/************************************************************************************************************************************
+ * Draws a text with a simple 2px outline
+ ************************************************************************************************************************************/
+PGraphics txtFxOutlineText(String text, PFont textFont, 
+  color textColor,
+  color outline) {
+
+  PGraphics result;
+  PVector textPosition = new PVector(40, 200);
+  float rad = 2; 
+  float stepsForOutlineCreation = 50;
+  float textSize = textFont.getSize();
+
+  result = createGraphics(10, 10);
+  result.beginDraw();
+  result.textFont(textFont);
+  result.textAlign(CENTER);
+  result.textSize(textSize);
+
+  int resultWidth = round(result.textWidth(text) + 2*rad + 2);
+  int resultHeight = round((result.textAscent() + result.textDescent()) + 2*rad +2);
+
+  textPosition = new PVector((float)resultWidth/2, resultHeight - (rad +1 ) - result.textDescent());
+
+  result =createGraphics(resultWidth, resultHeight);
+  result.beginDraw();
+  result.background(125);
+  result.textFont(textFont);
+  result.textAlign(CENTER);
+  result.textSize(textSize);
+
+
+
+  // Text Outline
+  result.fill(outline);
+  
+  for (float i=0; i<stepsForOutlineCreation; i++) {
+    float winkel = (i/stepsForOutlineCreation) * TWO_PI;
+    result.text(text, textPosition.x + sin(winkel)*rad, textPosition.y + cos(winkel)*rad);
+  }
+  result.filter(BLUR, 0.7);
+
+  // Text
+  result.fill(textColor);
+  result.text(text, textPosition.x, textPosition.y);
+
+  result.endDraw();
+
+  return result;
+}
