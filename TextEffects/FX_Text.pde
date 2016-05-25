@@ -1,43 +1,45 @@
 /************************************************************************************************************************************
  * Draws a text with a simple, blurred shadow
  ************************************************************************************************************************************/
-PGraphics txtFxShadow(String text, PFont textFont, color colorText, color colorShadow){
+PGraphics txtFxShadow(String text, PFont textFont, color colorText, color colorShadow) {
   PGraphics result;
-  
+
   PVector textPosition = new PVector(40, 200);
-  float rad = 0; 
-  
+  float rad = 3; 
+  float distance = 5;
+
   float textSize = textFont.getSize();
 
   result = createGraphics(10, 10);
   result.beginDraw();
   result.textFont(textFont);
-  result.textAlign(CENTER);
+  result.textAlign(LEFT);
   result.textSize(textSize);
+  result.endDraw();
 
-  int resultWidth = round(result.textWidth(text))+20;
-  int resultHeight = round((result.textAscent() + result.textDescent()) ) +1;
-  textPosition = new PVector((float)resultWidth/2,  result.textAscent()-5 );
-  
+  int resultWidth = round(result.textWidth(text) + 2*rad + 2*distance);
+  int resultHeight = round((result.textAscent() + result.textDescent()) + 2*rad + distance );
+  textPosition = new PVector(2, resultHeight - (textDescent() + 3*rad + 3*distance));
+
   result =createGraphics(resultWidth, resultHeight);
   result.beginDraw();
   //result.background(125);
   result.textFont(textFont);
-  result.textAlign(CENTER);
+  result.textAlign(LEFT);
   result.textSize(textSize);
-  
+
   result.fill(colorShadow);
-  result.text(text, textPosition.x + 5, textPosition.y + 5);
-  result.filter(BLUR,3);
-  
+  result.text(text, textPosition.x + distance, textPosition.y + distance);
+  result.filter(BLUR, rad);
+
   result.fill(colorText);
-  result.text(text, textPosition.x , textPosition.y );
-  
+  result.text(text, textPosition.x, textPosition.y );
+
   result.endDraw();
 
   return result;
 }
-  
+
 
 /************************************************************************************************************************************
  * Draws a text with a backdrop and black outlines around the text and the backdrop
@@ -51,7 +53,7 @@ PGraphics txtFxBackdropText(String text, PFont textFont,
 
 /************************************************************************************************************************************
  * Draws a text with a backdrop and outlines around the text and the backdrop
-************************************************************************************************************************************/
+ ************************************************************************************************************************************/
 PGraphics txtFxBackdropText(String text, PFont textFont, 
   color textFill, 
   color textOutlineFill, float textOutlineWidth, 
@@ -70,9 +72,10 @@ PGraphics txtFxBackdropText(String text, PFont textFont,
   result.textAlign(CENTER);
   result.textSize(textSize);
 
-  int resultWidth = round(result.textWidth(text) + 2*backdropDistance + 2*backDropOutlineWidth + 2)+1;
-  int resultHeight = round((result.textAscent() + result.textDescent()) + backdropDistance + backDropOutlineWidth ) +1;
-  textPosition = new PVector((float)resultWidth/2, resultHeight - (2* backdropDistance + 2*backDropOutlineWidth  -5));
+  int resultWidth = round(result.textWidth(text) + 2*backdropDistance + 2*backDropOutlineWidth + 2);
+  int resultHeight = round((result.textAscent() + result.textDescent()) + 2*backdropDistance + 2*backDropOutlineWidth +2);
+
+  textPosition = new PVector((float)resultWidth/2, resultHeight - (backdropDistance + backDropOutlineWidth +1 ) - result.textDescent());
 
   result =createGraphics(resultWidth, resultHeight);
   result.beginDraw();
@@ -80,6 +83,8 @@ PGraphics txtFxBackdropText(String text, PFont textFont,
   result.textFont(textFont);
   result.textAlign(CENTER);
   result.textSize(textSize);
+
+
 
   // Backdrop Outline
   result.fill(backdropOutlineFill);
